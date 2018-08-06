@@ -4,7 +4,7 @@ const INIT = Symbol('INIT')
 const INIT_WORDS = Symbol('INIT_WORDS')
 const BIND_EVENTS = Symbol('BIND_EVENTS')
 
-function getStyle(el, name) {
+function getStyle (el, name) {
   if (window.getComputedStyle) {
     return window.getComputedStyle(el, null)[name]
   } else {
@@ -59,18 +59,17 @@ class Points {
       var maxCounts = Math.max(...geometries.map(g => g.vertices.length))
 
       var geometry = new THREE.BufferGeometry()
-      var positions = new Float32Array( maxCounts * 3 )
+      var positions = new Float32Array(maxCounts * 3)
       geometry.addAttribute('position', new THREE.BufferAttribute(positions, 3))
 
-      var speed = new Float32Array( maxCounts )
+      var speed = new Float32Array(maxCounts)
       for (let i = 0; i < maxCounts; i++) {
         speed[i] = Math.random() + 1
       }
       geometry.addAttribute('speed', new THREE.BufferAttribute(speed, 1))
 
-
       geometries.forEach((g, index) => {
-        var iPositions = new Float32Array( maxCounts * 3 )
+        var iPositions = new Float32Array(maxCounts * 3)
         g.vertices.forEach((vertice, vIndex) => {
           vertice.toArray(iPositions, vIndex * 3)
         })
@@ -103,7 +102,7 @@ class Points {
       let position2 = 'position' + this.stage
       let start = this.points.geometry.attributes[position1].array
       let end = this.points.geometry.attributes[position2].array
-      
+
       let length = speed.length
       for (let i = 0; i < length; i++) {
         position[i * 3] = start[i * 3] + Math.min(1, (step * speed[i])) * (end[i * 3] - start[i * 3])
@@ -123,7 +122,7 @@ class Points {
   _render () {
     this.update()
     this.render()
-    requestAnimationFrame(this._render.bind(this))
+    window.requestAnimationFrame(this._render.bind(this))
   }
 
   [ BIND_EVENTS ] () {
