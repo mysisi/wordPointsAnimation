@@ -16,9 +16,9 @@ export default {
   mounted () {
     // console.log('points', this.$refs.points)
     let p = new Points(this.$refs.points, [
-      'Sisi',
+      'sisi',
       'love',
-      'MY',
+      'my',
       'love'
     ])
   }
