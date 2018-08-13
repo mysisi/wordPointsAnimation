@@ -1,3 +1,4 @@
+import img from './light_dot.png'
 let THREE = window.THREE
 
 const INIT = Symbol('INIT')
@@ -11,6 +12,8 @@ function getStyle (el, name) {
     return el.currentStyle[name]
   }
 }
+
+let texture = new THREE.TextureLoader().load(img)
 
 class Points {
   constructor (el, words = ['hello', 'world']) {
@@ -46,7 +49,8 @@ class Points {
         let geometry = new THREE.TextGeometry(text, {
           font: font,
           size: 80,
-          height: 5
+          height: 5,
+          curveSegments: 10
         })
         geometry.computeBoundingBox()
         let [minX, minY, maxX, maxY] = [geometry.boundingBox.min.x, geometry.boundingBox.min.y, geometry.boundingBox.max.x, geometry.boundingBox.max.y]
@@ -64,7 +68,7 @@ class Points {
 
       var speed = new Float32Array(maxCounts)
       for (let i = 0; i < maxCounts; i++) {
-        speed[i] = Math.random() + 1
+        speed[i] = Math.random() + 4
       }
       geometry.addAttribute('speed', new THREE.BufferAttribute(speed, 1))
 
@@ -78,7 +82,10 @@ class Points {
 
       var material = new THREE.PointsMaterial({
         color: 0xffff00,
-        depthTest: false
+        depthTest: false,
+        map: texture,
+        transparent: true,
+        size: 5
       })
 
       this.points = new THREE.Points(
